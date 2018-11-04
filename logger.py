@@ -24,7 +24,7 @@ class Logger:
 
         if self.logFile is not None:
             try:
-                with open(file, 'a+') as txt:
+                with open(self.logFile, 'a+') as txt:
                     txt.write('{} : Task [{}] : {}\n'.format(timestamp, self.tid, text))
             except Exception as e:
                 print('ERROR: problem writing to file: {}'.format(str(e)))
