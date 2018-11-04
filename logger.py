@@ -10,10 +10,6 @@ class Logger:
     def log(self, text, color=None, file=None, debug=None):
         timestamp = '[' + datetime.now().strftime(self.format) + ']'
         timestamp_colour = colored(timestamp, "yellow")
-        if color is not None:
-            text = self.getColor(text, color)
-        elif debug == True:
-            text = self.getColor(text, 'debug')
 
         if file is not None:
             try:
@@ -28,6 +24,11 @@ class Logger:
                     txt.write('{} : Task [{}] : {}\n'.format(timestamp, self.tid, text))
             except Exception as e:
                 print('ERROR: problem writing to file: {}'.format(str(e)))
+
+        if color is not None:
+            text = self.getColor(text, color)
+        elif debug == True:
+            text = self.getColor(text, 'debug')
 
         if debug is not None:
             if debug == True:
