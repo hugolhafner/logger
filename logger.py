@@ -2,10 +2,11 @@ from datetime import datetime
 from termcolor import colored
 
 class Logger:
-    def __init__(self, tid, logFile=None):
+    def __init__(self, tid, logFile=None, debugMode=False):
         self.format = '%H:%M:%S'
         self.tid = str(tid)
         self.logFile = logFile
+        self.debugMode = debugMode
 
     def log(self, text, color=None, file=None, debug=None):
         timestamp = '[' + datetime.now().strftime(self.format) + ']'
@@ -30,8 +31,8 @@ class Logger:
         elif debug == True:
             text = self.getColor(text, 'debug')
 
-        if debug is not None:
-            if debug == True:
+        if (debug is not None) or (self.debugMode is not None):
+            if (debug == True) or (self.debugMode == True):
                 print('{} : Task [{}] : {}'.format(timestamp_colour, self.tid, text))
             else:
                 pass
