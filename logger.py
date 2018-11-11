@@ -28,14 +28,14 @@ class Logger:
 
         if color is not None:
             text = self.getColor(text, color)
-        elif debug == True:
-            text = self.getColor(text, 'debug')
-
-        if (debug is not None) or (self.debugMode is not None):
-            if (debug == True) or (self.debugMode == True):
-                print('{} : Task [{}] : {}'.format(timestamp_colour, self.tid, text))
+            if color == 'debug':
+                if (debug != None) or (self.debugMode != None):
+                    if (debug == True) or (self.debugMode == True):
+                        print('{} : Task [{}] : {}'.format(timestamp_colour, self.tid, text))
+                    else:
+                        pass
             else:
-                pass
+                print('{} : Task [{}] : {}'.format(timestamp_colour, self.tid, text))
         else:
             print('{} : Task [{}] : {}'.format(timestamp_colour, self.tid, text))
 
