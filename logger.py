@@ -1,3 +1,4 @@
+import string
 from datetime import datetime
 from termcolor import colored
 
@@ -13,21 +14,13 @@ class Logger:
         timestamp_colour = colored(timestamp, "yellow")
 
         if file is not None:
-            try:
-                with open(file, 'a+') as txt:
-                    txt.write('{} : Task [{}] : {}\n'.format(timestamp, self.tid, text))
-            except Exception as e:
-                print('ERROR: problem writing to file: {}'.format(str(e)))
-
+            self.logToFile(file, text, timestamp)
         if self.logFile is not None:
-            try:
-                with open(self.logFile, 'a+') as txt:
-                    txt.write('{} : Task [{}] : {}\n'.format(timestamp, self.tid, text))
-            except Exception as e:
-                print('ERROR: problem writing to file: {}'.format(str(e)))
+            self.logToFile(self.logFile, text, timestamp)
 
         if color is not None:
             text = self.getColor(text, color)
+
             if color == 'debug':
                 if (debug != None) or (self.debugMode != None):
                     if (debug == True) or (self.debugMode == True):
@@ -38,6 +31,16 @@ class Logger:
                 print('{} : Task [{}] : {}'.format(timestamp_colour, self.tid, text))
         else:
             print('{} : Task [{}] : {}'.format(timestamp_colour, self.tid, text))
+
+    def logToFile(self, file, text, timestamp):
+        printable = set(string.printable)
+        text = ''.join(filter(lambda x: x in printable, text))
+
+        try:
+            with open(file, 'a+') as txt:
+                txt.write('{} : Task [{}] : {}\n'.format(timestamp, self.tid, text))
+        except Exception as e:
+            print('ERROR: problem writing to file: {}'.format(str(e)))
 
     def getColor(self, text, color):
         try:
