@@ -2,6 +2,7 @@ import string
 from datetime import datetime
 from termcolor import colored
 
+
 class Logger:
     def __init__(self, tid, logFile=None, debugMode=False):
         self.format = '%H:%M:%S'
